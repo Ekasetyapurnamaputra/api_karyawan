@@ -1,0 +1,3 @@
+Tambahkan baris ini ke file .gitignore yang ada di root project:
+
+config/fonnte.local.php

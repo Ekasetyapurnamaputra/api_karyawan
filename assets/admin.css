@@ -1,0 +1,701 @@
+/* ==========================================================================
+   Karyawan-WA — Admin Stylesheet
+   Loaded AFTER style.css + layout.css on admin pages only.
+     1. Design tokens
+     2. Page hero (title + actions)
+     3. Stat cards (KPI)
+     4. Breakdown / progress
+     5. Filters
+     6. Tables (responsive card mode)
+     7. Report meta + quick links
+     8. Responsive breakpoints
+   ========================================================================== */
+
+/* 1. Design tokens ======================================================= */
+:root {
+    --adm-blue: #1d4ed8;
+    --adm-blue-soft: #eff6ff;
+    --adm-green: #067647;
+    --adm-green-soft: #ecfdf3;
+    --adm-amber: #b54708;
+    --adm-amber-soft: #fffaeb;
+    --adm-red: #b42318;
+    --adm-red-soft: #fef3f2;
+    --adm-violet: #5925dc;
+    --adm-violet-soft: #f4f3ff;
+    --adm-slate-soft: #f8fafc;
+    --adm-meter-bg: #eef2f7;
+}
+
+/* 2. Page hero =========================================================== */
+.adm-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.adm-hero-text { min-width: 0; }
+
+.adm-eyebrow {
+    display: inline-block;
+    margin-bottom: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--adm-blue-soft);
+    color: var(--adm-blue);
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.adm-hero h2 {
+    margin: 0 0 6px;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    line-height: 1.25;
+}
+
+.adm-hero p { margin: 0; }
+
+.adm-hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.adm-hero-actions .button { margin-top: 0; }
+
+/* 3. Stat cards (KPI) ==================================================== */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0 0 22px;
+}
+
+.stat-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 150px;
+    padding: 18px 18px 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--shadow-xs);
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--adm-blue);
+}
+
+.stat-card.tone-green::before { background: var(--adm-green); }
+.stat-card.tone-amber::before { background: var(--adm-amber); }
+.stat-card.tone-violet::before { background: var(--adm-violet); }
+.stat-card.tone-red::before { background: var(--adm-red); }
+
+.stat-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.stat-label {
+    color: var(--ink-muted);
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    border-radius: 10px;
+    background: var(--adm-blue-soft);
+    color: var(--adm-blue);
+}
+
+.stat-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.tone-green .stat-icon { background: var(--adm-green-soft); color: var(--adm-green); }
+.tone-amber .stat-icon { background: var(--adm-amber-soft); color: var(--adm-amber); }
+.tone-violet .stat-icon { background: var(--adm-violet-soft); color: var(--adm-violet); }
+.tone-red .stat-icon { background: var(--adm-red-soft); color: var(--adm-red); }
+
+.stat-card strong {
+    margin: 6px 0 2px;
+    font-size: clamp(1.85rem, 4vw, 2.35rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    color: var(--slate-900);
+}
+
+.stat-note { color: var(--ink-subtle); font-size: .78rem; }
+
+.stat-meter { margin-top: auto; padding-top: 10px; }
+
+.stat-meter-bar {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--adm-meter-bg);
+    overflow: hidden;
+}
+
+.stat-meter-bar > span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--adm-blue);
+    transition: width .35s ease;
+}
+
+.tone-green .stat-meter-bar > span { background: var(--adm-green); }
+.tone-amber .stat-meter-bar > span { background: var(--adm-amber); }
+.tone-violet .stat-meter-bar > span { background: var(--adm-violet); }
+.tone-red .stat-meter-bar > span { background: var(--adm-red); }
+
+
+/* 4. Breakdown / progress ================================================ */
+.adm-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+/* Anak grid harus boleh menyusut, jika tidak grafik harian (min-width: max-content)
+   memaksa seluruh panel melebar dan merusak layout pada layar sempit. */
+.adm-split > * { min-width: 0; }
+
+/* Panel yang perlu lebar penuh (mis. grafik harian yang dapat digulir). */
+.adm-span-full { grid-column: 1 / -1; }
+
+.adm-subpanel {
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--shadow-xs);
+    padding: 18px;
+}
+
+.adm-subpanel > h3 { margin: 0 0 4px; font-size: 1rem; }
+.adm-subpanel > .muted { margin: 0 0 14px; font-size: .84rem; }
+
+.adm-breakdown { display: flex; flex-direction: column; gap: 12px; }
+.adm-breakdown-row { display: flex; flex-direction: column; gap: 5px; }
+
+.adm-breakdown-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: .84rem;
+}
+
+.adm-breakdown-head .adm-breakdown-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 650;
+    color: var(--slate-700);
+}
+
+.adm-breakdown-dot {
+    width: 9px;
+    height: 9px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--adm-blue);
+}
+
+.adm-breakdown-dot.s-Hadir { background: var(--adm-green); }
+.adm-breakdown-dot.s-Terlambat { background: var(--adm-amber); }
+.adm-breakdown-dot.s-Izin { background: var(--adm-violet); }
+.adm-breakdown-dot.s-Sakit { background: var(--adm-red); }
+
+.adm-breakdown-head .adm-breakdown-count {
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-breakdown-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--adm-meter-bg);
+    overflow: hidden;
+}
+
+.adm-breakdown-bar > span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--adm-blue);
+    transition: width .35s ease;
+}
+
+.adm-empty {
+    padding: 22px 16px;
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    background: var(--adm-slate-soft);
+    color: var(--ink-muted);
+    font-size: .86rem;
+    text-align: center;
+}
+
+/* 4b. Trend chart ======================================================= */
+.adm-trend {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: end;
+    gap: 8px;
+    height: 168px;
+    padding-top: 10px;
+}
+
+.adm-trend-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    height: 100%;
+    min-width: 0;
+}
+
+.adm-trend-value {
+    font-size: .74rem;
+    font-weight: 700;
+    color: var(--slate-700);
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-trend-bar {
+    width: 100%;
+    min-height: 4px;
+    border-radius: 6px 6px 3px 3px;
+    background: var(--adm-blue);
+    opacity: .85;
+}
+
+.adm-trend-bar.is-empty { background: #e2e8f0; }
+
+/* Varian harian (laporan): kolom bergulir horizontal, satu baris per tanggal. */
+.adm-trend-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+}
+
+.adm-trend-daily {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 54px;
+    height: 150px;
+    min-width: max-content;
+}
+
+.adm-trend-label {
+    font-size: .66rem;
+    color: var(--ink-subtle);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.adm-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-size: .78rem;
+    color: var(--ink-muted);
+}
+
+
+/* 5. Filters ============================================================= */
+.adm-filter {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 18px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--adm-slate-soft);
+}
+
+.adm-filter .filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 170px;
+    flex: 1 1 170px;
+}
+
+.adm-filter .filter-field label {
+    margin-top: 0;
+    font-size: .8rem;
+    font-weight: 650;
+}
+
+.adm-filter .filter-field input,
+.adm-filter .filter-field select { width: 100%; }
+
+.adm-filter .button { margin-top: 0; white-space: nowrap; }
+.adm-filter .filter-field.is-wide { flex-basis: 240px; }
+
+.adm-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: -6px 0 18px;
+}
+
+.adm-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--slate-700);
+    font-size: .8rem;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.adm-chip:hover { border-color: var(--adm-blue); color: var(--adm-blue); }
+.adm-chip.is-active { background: var(--adm-blue); border-color: var(--adm-blue); color: #fff; }
+
+/* 6. Tables ============================================================== */
+.adm-table-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 12px;
+    color: var(--ink-muted);
+    font-size: .86rem;
+}
+
+.adm-table-meta p { margin: 0; }
+
+.adm-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--shadow-xs);
+}
+
+.adm-table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    font-size: .88rem;
+    text-align: left;
+}
+
+.adm-table th,
+.adm-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+}
+
+.adm-table thead th {
+    background: var(--adm-slate-soft);
+    color: var(--slate-700);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.adm-table tbody tr { transition: background-color .1s ease; }
+.adm-table tbody tr:hover { background: #f8fafc; }
+.adm-table tbody tr:last-child td { border-bottom: 0; }
+.adm-table td { overflow-wrap: anywhere; }
+
+.adm-table .adm-index {
+    width: 44px;
+    color: var(--ink-subtle);
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-table .adm-nik {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .82rem;
+    color: var(--slate-600);
+    white-space: nowrap;
+}
+
+.adm-table .adm-name { font-weight: 650; color: var(--slate-800); }
+
+.adm-table .adm-cell-tanggal {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.adm-table .adm-cell-masuk {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.adm-table .adm-time {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.adm-table .adm-time.is-empty { color: var(--ink-subtle); }
+
+.adm-empty-row td {
+    padding: 34px 16px !important;
+    text-align: center !important;
+    color: var(--ink-muted);
+}
+
+.adm-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: .78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.adm-status-pill::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.adm-status-pill[data-status="Hadir"] { background: var(--adm-green-soft); color: var(--adm-green); }
+.adm-status-pill[data-status="Terlambat"] { background: var(--adm-amber-soft); color: var(--adm-amber); }
+.adm-status-pill[data-status="Izin"] { background: var(--adm-violet-soft); color: var(--adm-violet); }
+.adm-status-pill[data-status="Sakit"] { background: var(--adm-red-soft); color: var(--adm-red); }
+.adm-status-pill[data-status="Belum Absen"] { background: #f1f5f9; color: #475569; }
+
+/* 7. Report meta + quick links =========================================== */
+.adm-report-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 16px;
+}
+
+.adm-report-actions .adm-report-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}
+
+.adm-report-summary div { display: flex; flex-direction: column; gap: 2px; }
+
+.adm-report-summary span {
+    color: var(--ink-subtle);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-weight: 700;
+}
+
+.adm-report-summary strong {
+    font-size: 1.05rem;
+    color: var(--slate-800);
+    font-variant-numeric: tabular-nums;
+}
+
+.adm-report-actions .button { margin-top: 0; }
+
+.adm-quick-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 22px;
+}
+
+.adm-quick-link {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.adm-quick-link:hover {
+    border-color: var(--adm-blue);
+    background: #f8fbff;
+    text-decoration: none;
+}
+
+.adm-quick-link strong { color: var(--adm-blue); font-size: .95rem; }
+.adm-quick-link span { color: var(--ink-muted); font-size: .84rem; }
+
+.adm-note {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    border-left: 3px solid var(--adm-blue);
+    border-radius: 0 10px 10px 0;
+    background: var(--adm-blue-soft);
+    color: var(--slate-600);
+    font-size: .82rem;
+}
+
+
+/* 8. Responsive breakpoints ============================================== */
+@media (max-width: 1365px) {
+    .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .adm-quick-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1023px) {
+    .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .adm-split { grid-template-columns: 1fr; }
+    .adm-quick-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+    .adm-hero { align-items: stretch; flex-direction: column; gap: 12px; }
+    .adm-hero-actions { width: 100%; }
+    .adm-hero-actions .button { flex: 1 1 auto; justify-content: center; }
+    .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .stat-card { min-height: 124px; padding: 14px; }
+    .stat-label { font-size: .68rem; }
+    .stat-note { font-size: .72rem; }
+    .adm-filter { padding: 14px; }
+    .adm-filter .filter-field { flex: 1 1 100%; min-width: 0; }
+    .adm-filter .button { width: 100%; }
+    .adm-filter .filter-field.is-wide { flex-basis: 100%; }
+    .adm-report-actions { align-items: stretch; flex-direction: column; }
+    .adm-report-actions .button { width: 100%; justify-content: center; }
+    .adm-quick-links { grid-template-columns: 1fr; }
+
+    /* Card mode: each row becomes a stacked card with visible labels. */
+    .adm-table-wrap {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        overflow: visible;
+    }
+
+    .adm-table { min-width: 0; display: block; }
+    .adm-table thead { display: none; }
+    .adm-table tbody { display: flex; flex-direction: column; gap: 12px; }
+
+    .adm-table tr {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 12px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: var(--shadow-xs);
+    }
+
+    .adm-table tbody tr:hover { background: #fff; }
+
+    .adm-table td {
+        border: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .adm-table td::before {
+        content: attr(data-label);
+        color: var(--ink-subtle);
+        font-size: .66rem;
+        font-weight: 800;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+
+    .adm-table td.adm-cell-index { display: none; }
+    .adm-table td.adm-cell-name { grid-column: 1 / -1; }
+    .adm-table td.adm-cell-status { grid-column: 1 / -1; }
+    .adm-table td.adm-cell-tanggal,
+    .adm-table td.adm-cell-masuk { white-space: normal; }
+    .adm-table td.adm-cell-nik .adm-nik { white-space: normal; word-break: break-all; }
+    .adm-empty-row { display: block !important; }
+    .adm-empty-row td { display: block; text-align: center; }
+    .adm-empty-row td::before { content: none; }
+}
+
+@media (max-width: 430px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .stat-card { min-height: auto; }
+    .adm-trend { height: 140px; gap: 6px; }
+    .adm-trend-label { font-size: .6rem; }
+    .adm-chips { gap: 6px; }
+    .adm-chip { min-height: 32px; padding: 4px 10px; font-size: .75rem; }
+}
+
+@media (max-width: 360px) {
+    .adm-hero-actions { flex-direction: column; align-items: stretch; }
+    .adm-hero-actions .button { width: 100%; }
+    .adm-table tr { grid-template-columns: 1fr; }
+    .adm-filter .button { width: 100%; }
+    .adm-report-summary { gap: 10px 14px; }
+}
+
+@media (max-width: 320px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .adm-subpanel { padding: 14px; }
+    .adm-trend { height: 126px; gap: 4px; }
+    .adm-trend-label { font-size: .56rem; letter-spacing: 0; }
+    .adm-table td::before { font-size: .6rem; }
+}
+
+.adm-legend span { display: inline-flex; align-items: center; gap: 6px; }

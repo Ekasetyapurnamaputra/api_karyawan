@@ -1,0 +1,1115 @@
+/**
+ * Karyawan-WA Attendance Module Stylesheet
+ * Mobile-First, Ergonomic, One-Handed Presensi Experience
+ */
+
+/* ==========================================================================
+   1. MAIN ATTENDANCE CONTAINER & HERO CLOCK WIDGET
+   ========================================================================== */
+
+.attendance-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* User Greeting & Date Header */
+.attendance-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid #334155;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    color: #ffffff;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.attendance-hero::after {
+    content: "";
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.attendance-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.attendance-greeting {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.attendance-name {
+    font-size: clamp(1.25rem, 3vw, 1.55rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 4px;
+    line-height: 1.2;
+}
+
+.attendance-meta {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.attendance-meta-dot {
+    opacity: 0.5;
+}
+
+/* Digital Clock Widget */
+.attendance-clock-box {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.attendance-date-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.attendance-date-label svg {
+    width: 18px;
+    height: 18px;
+    color: #38bdf8;
+}
+
+.attendance-live-clock {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-sm);
+    padding: 6px 14px;
+}
+
+.attendance-clock-time {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #38bdf8;
+    letter-spacing: 0.05em;
+}
+
+.attendance-clock-zone {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+/* ==========================================================================
+   2. TODAY'S ATTENDANCE SUMMARY CARDS
+   ========================================================================== */
+
+.today-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.summary-card {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.summary-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--ink-muted);
+}
+
+.summary-card-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.summary-card-icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    color: var(--slate-400);
+}
+
+.summary-card-value {
+    font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+    font-weight: 800;
+    color: var(--slate-900);
+    letter-spacing: -0.02em;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    line-height: 1.2;
+}
+
+.summary-card-value.empty {
+    color: var(--slate-400);
+    font-weight: 600;
+    font-family: inherit;
+    font-size: 1.1rem;
+}
+
+.summary-card-status {
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   3. ONE-HANDED THUMB ACTION ZONE (MOBILE-FIRST)
+   ========================================================================== */
+
+.attendance-action-panel {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.action-panel-header {
+    margin-bottom: 18px;
+}
+
+.action-panel-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    margin: 0 0 4px;
+}
+
+.action-panel-desc {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.attendance-form {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+/* Big Thumb-Friendly Attendance Button */
+.btn-attendance-action {
+    width: 100%;
+    min-height: 58px;
+    padding: 14px 24px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    transition: transform 0.1s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    touch-action: manipulation;
+}
+
+.btn-attendance-action:active {
+    transform: scale(0.97);
+}
+
+.btn-attendance-action svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.3;
+}
+
+.btn-attendance-masuk {
+    background-color: var(--primary-600);
+    border: 1px solid var(--primary-700);
+    color: #ffffff;
+}
+
+.btn-attendance-masuk:hover {
+    background-color: var(--primary-700);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+}
+
+.btn-attendance-pulang {
+    background-color: #ea580c; /* Solid Vibrant Amber/Orange */
+    border: 1px solid #c2410c;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+}
+
+.btn-attendance-pulang:hover {
+    background-color: #c2410c;
+    box-shadow: 0 6px 18px rgba(234, 88, 12, 0.4);
+}
+
+/* Completed Card Banner */
+.attendance-completed-card {
+    background-color: var(--success-bg);
+    border: 1px solid var(--success-border);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: left;
+}
+
+.completed-icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background-color: #059669;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(5, 150, 105, 0.3);
+}
+
+.completed-icon-circle svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 2.5;
+}
+
+.completed-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.completed-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #065f46;
+    margin: 0 0 3px;
+}
+
+.completed-desc {
+    font-size: 0.88rem;
+    color: #047857;
+    margin: 0;
+}
+
+/* ==========================================================================
+   4. RIWAYAT ABSENSI (MOBILE CARD STREAM & DESKTOP TABLE)
+   ========================================================================== */
+
+.history-section {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.history-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    margin: 0;
+}
+
+.history-badge {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--slate-600);
+    background: var(--slate-100);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+}
+
+/* Desktop Data Table for History */
+.desktop-history-table {
+    display: block;
+}
+
+/* Mobile Attendance Card Stream (< 640px) */
+.mobile-history-list {
+    display: none; /* Shown via media query */
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-card-item {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background-color 0.1s ease;
+}
+
+.history-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-card-date {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--slate-900);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.history-card-date svg {
+    width: 16px;
+    height: 16px;
+    color: var(--slate-500);
+}
+
+.history-card-times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--slate-100);
+}
+
+.history-time-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-time-label {
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.history-time-val {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--slate-800);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Empty State Card */
+.empty-history-box {
+    text-align: center;
+    padding: 42px 20px;
+    color: var(--ink-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.empty-history-icon {
+    width: 52px;
+    height: 52px;
+    color: var(--slate-300);
+    stroke-width: 1.5;
+}
+
+.empty-history-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--slate-700);
+    margin: 0;
+}
+
+.empty-history-desc {
+    font-size: 0.88rem;
+    margin: 0;
+    max-width: 320px;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE MEDIA QUERIES (320px, 360px, 390px, 430px, 768px)
+   ========================================================================== */
+
+/* Tablets & Small Desktops (<= 768px) */
+@media (max-width: 768px) {
+    .attendance-hero {
+        padding: 18px;
+    }
+    
+    .attendance-clock-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .today-summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .summary-card {
+        padding: 12px 14px;
+    }
+
+    .summary-card-value {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile Screens (<= 640px: 320px - 430px) */
+@media (max-width: 640px) {
+    .attendance-page {
+        gap: 14px;
+    }
+
+    /* Switch today summary from 3 columns to 1 stacked or 2+1 grid */
+    .today-summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .summary-card:nth-child(3) {
+        grid-column: span 2;
+    }
+
+    /* Switch from HTML table to Native Mobile Cards stream */
+    .desktop-history-table {
+        display: none !important;
+    }
+
+    .mobile-history-list {
+        display: flex !important;
+    }
+
+    .attendance-action-panel {
+        padding: 20px 16px;
+    }
+
+    .btn-attendance-action {
+        min-height: 54px;
+        font-size: 1rem;
+    }
+
+    .attendance-completed-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 18px 16px;
+    }
+}
+
+/* Extra-Narrow Screens (<= 360px) */
+@media (max-width: 360px) {
+    .attendance-meta {
+        font-size: 0.78rem;
+    }
+
+    .attendance-clock-time {
+        font-size: 1.15rem;
+    }
+
+    .summary-card-value {
+        font-size: 0.98rem;
+    }
+
+    .btn-attendance-action {
+        font-size: 0.95rem;
+        gap: 8px;
+    }
+}
+
+/* User Greeting & Date Header */
+.attendance-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid #334155;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    color: #ffffff;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.attendance-hero::after {
+    content: "";
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.attendance-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.attendance-greeting {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.attendance-name {
+    font-size: clamp(1.25rem, 3vw, 1.55rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 4px;
+    line-height: 1.2;
+}
+
+.attendance-meta {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.attendance-meta-dot {
+    opacity: 0.5;
+}
+
+/* Digital Clock Widget */
+.attendance-clock-box {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.attendance-date-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.attendance-date-label svg {
+    width: 18px;
+    height: 18px;
+    color: #38bdf8;
+}
+
+.attendance-live-clock {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-sm);
+    padding: 6px 14px;
+}
+
+.attendance-clock-time {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #38bdf8;
+    letter-spacing: 0.05em;
+}
+
+.attendance-clock-zone {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+/* ==========================================================================
+   2. TODAY'S ATTENDANCE SUMMARY CARDS
+   ========================================================================== */
+
+.today-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.summary-card {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.summary-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--ink-muted);
+}
+
+.summary-card-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.summary-card-icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    color: var(--slate-400);
+}
+
+.summary-card-value {
+    font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+    font-weight: 800;
+    color: var(--slate-900);
+    letter-spacing: -0.02em;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    line-height: 1.2;
+}
+
+.summary-card-value.empty {
+    color: var(--slate-400);
+    font-weight: 600;
+    font-family: inherit;
+    font-size: 1.1rem;
+}
+
+.summary-card-status {
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   3. ONE-HANDED THUMB ACTION ZONE (MOBILE-FIRST)
+   ========================================================================== */
+
+.attendance-action-panel {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.action-panel-header {
+    margin-bottom: 18px;
+}
+
+.action-panel-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    margin: 0 0 4px;
+}
+
+.action-panel-desc {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.attendance-form {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+/* Big Thumb-Friendly Attendance Button */
+.btn-attendance-action {
+    width: 100%;
+    min-height: 58px;
+    padding: 14px 24px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    transition: transform 0.1s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    touch-action: manipulation;
+}
+
+.btn-attendance-action:active {
+    transform: scale(0.97);
+}
+
+.btn-attendance-action svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.3;
+}
+
+.btn-attendance-masuk {
+    background-color: var(--primary-600);
+    border: 1px solid var(--primary-700);
+    color: #ffffff;
+}
+
+.btn-attendance-masuk:hover {
+    background-color: var(--primary-700);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+}
+
+.btn-attendance-pulang {
+    background-color: #ea580c; /* Solid Vibrant Amber/Orange */
+    border: 1px solid #c2410c;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+}
+
+.btn-attendance-pulang:hover {
+    background-color: #c2410c;
+    box-shadow: 0 6px 18px rgba(234, 88, 12, 0.4);
+}
+
+/* Completed Card Banner */
+.attendance-completed-card {
+    background-color: var(--success-bg);
+    border: 1px solid var(--success-border);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: left;
+}
+
+.completed-icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background-color: #059669;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(5, 150, 105, 0.3);
+}
+
+.completed-icon-circle svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 2.5;
+}
+
+.completed-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.completed-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #065f46;
+    margin: 0 0 3px;
+}
+
+.completed-desc {
+    font-size: 0.88rem;
+    color: #047857;
+    margin: 0;
+}
+
+/* ==========================================================================
+   4. RIWAYAT ABSENSI (MOBILE CARD STREAM & DESKTOP TABLE)
+   ========================================================================== */
+
+.history-section {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.history-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    margin: 0;
+}
+
+.history-badge {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--slate-600);
+    background: var(--slate-100);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+}
+
+/* Desktop Data Table for History */
+.desktop-history-table {
+    display: block;
+}
+
+/* Mobile Attendance Card Stream (< 640px) */
+.mobile-history-list {
+    display: none; /* Shown via media query */
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-card-item {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background-color 0.1s ease;
+}
+
+.history-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-card-date {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--slate-900);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.history-card-date svg {
+    width: 16px;
+    height: 16px;
+    color: var(--slate-500);
+}
+
+.history-card-times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--slate-100);
+}
+
+.history-time-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-time-label {
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.history-time-val {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--slate-800);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Empty State Card */
+.empty-history-box {
+    text-align: center;
+    padding: 42px 20px;
+    color: var(--ink-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.empty-history-icon {
+    width: 52px;
+    height: 52px;
+    color: var(--slate-300);
+    stroke-width: 1.5;
+}
+
+.empty-history-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--slate-700);
+    margin: 0;
+}
+
+.empty-history-desc {
+    font-size: 0.88rem;
+    margin: 0;
+    max-width: 320px;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE MEDIA QUERIES (320px, 360px, 390px, 430px, 768px)
+   ========================================================================== */
+
+/* Tablets & Small Desktops (<= 768px) */
+@media (max-width: 768px) {
+    .attendance-hero {
+        padding: 18px;
+    }
+    
+    .attendance-clock-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .today-summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .summary-card {
+        padding: 12px 14px;
+    }
+
+    .summary-card-value {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile Screens (<= 640px: 320px - 430px) */
+@media (max-width: 640px) {
+    .attendance-page {
+        gap: 14px;
+    }
+
+    /* Switch today summary from 3 columns to 1 stacked or 2+1 grid */
+    .today-summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .summary-card:nth-child(3) {
+        grid-column: span 2;
+    }
+
+    /* Switch from HTML table to Native Mobile Cards stream */
+    .desktop-history-table {
+        display: none !important;
+    }
+
+    .mobile-history-list {
+        display: flex !important;
+    }
+
+    .attendance-action-panel {
+        padding: 20px 16px;
+    }
+
+    .btn-attendance-action {
+        min-height: 54px;
+        font-size: 1rem;
+    }
+
+    .attendance-completed-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 18px 16px;
+    }
+}
+
+/* Extra-Narrow Screens (<= 360px) */
+@media (max-width: 360px) {
+    .attendance-meta {
+        font-size: 0.78rem;
+    }
+
+    .attendance-clock-time {
+        font-size: 1.15rem;
+    }
+
+    .summary-card-value {
+        font-size: 0.98rem;
+    }
+
+    .btn-attendance-action {
+        font-size: 0.95rem;
+        gap: 8px;
+    }
+}
+
